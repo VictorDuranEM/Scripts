@@ -1,4 +1,4 @@
-# !/bin/bash
+#!/bin/bash
 # Define resources and destination directories variables and provide the
 # option to initialize them by the user with the parameters -r and -d
 
@@ -24,7 +24,13 @@ zipResources() {
 		exit 1
 	fi
 
-	# Create the zip file concatenating the current date and time
+        # Delete the zip file if it already exists
+	if [ -f $destinationPath/$zipName.zip ]; then
+		echo "Removing existing zip file"
+        	rm $destinationPath/$zipName.zip	
+	fi
+
+        # Create the zip file concatenating the current date and time
 	zip -r $destinationPath/$zipName.zip * -x "*.svn*" -x "*.DS_Store*" -x "*__MACOSX*"
 	echo "Hi there!, your zip has been created! :)"
 	open $destinationPath
@@ -71,11 +77,11 @@ do
     esac
 done
 
-currentDate="'date +%Y'"
-echo $currentDate
+# currentDate="'date +%Y'"
+# echo $currentDate
 
-# printVariablesValues;
+printVariablesValues;
 
-# validateUserInputs;
+validateUserInputs;
 
-# zipResources;
+zipResources;
